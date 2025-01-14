@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: self-hosted
     labels:
-      - demoapp  # The environment the job will run on
+      - demoapp
 
     steps:
       # Step 1: Checkout the code from the repository
@@ -33,7 +33,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: dhineshk6/app:latest  # You can also use dynamic tags like ${{ github.sha }}
+          tags: dhineshk6/app:v3  # You can also use dynamic tags like ${{ github.sha }}
 
       # Step 5: Set up kubectl with kubeconfig to access your local Kubernetes cluster
       - name: Set up kubectl
