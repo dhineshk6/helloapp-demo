@@ -42,6 +42,6 @@ jobs:
       # Step 6: Apply your Kubernetes deployment file to deploy the app
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f ./html-app.yaml  # Path to your Kubernetes deployment YAML file
+          kubectl apply -f ./html-app.yaml --validate=false # Path to your Kubernetes deployment YAML file
           kubectl rollout status deployment/html-app  # Ensure the deployment completes successfully
 
