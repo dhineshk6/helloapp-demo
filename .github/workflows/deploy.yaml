@@ -3,7 +3,7 @@ name: Deploy to Local Kubernetes (Docker Desktop)
 on:
   push:
     branches:
-      - main  # Trigger the action when changes are pushed to the 'main' branch
+      - v1  # Trigger the action when changes are pushed to the 'main' branch
 
 jobs:
   build:
