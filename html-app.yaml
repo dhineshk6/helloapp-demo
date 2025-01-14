@@ -6,7 +6,7 @@ metadata:
   labels:
     app: html-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: html-app
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: html-app
-        image: dhineshk6/app:latest
+        image: dhineshk6/app:v2
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -34,5 +34,4 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
-    nodePort: 30001
-  type: NodePort
+  type: LoadBalancer
