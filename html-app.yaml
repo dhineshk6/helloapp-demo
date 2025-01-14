@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: html-app
-        image: local-html-app:latest
+        image: dhineshk6/app:latest
         ports:
         - containerPort: 80
 ---
