@@ -1,0 +1,47 @@
+name: Deploy to Local Kubernetes (Docker Desktop)
+
+on:
+  push:
+    branches:
+      - main  # Trigger the action when changes are pushed to the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # The environment the job will run on
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Docker Buildx for building the Docker image
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      # Step 3: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Step 4: Build and push Docker image to Docker Hub
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: dhineshk6/app:latest  # You can also use dynamic tags like ${{ github.sha }}
+
+      # Step 5: Set up kubectl with kubeconfig to access your local Kubernetes cluster
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}  # Use the KUBE_CONFIG secret created earlier
+
+      # Step 6: Apply your Kubernetes deployment file to deploy the app
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f deployment.yaml  # Path to your Kubernetes deployment YAML file
+          kubectl rollout status deployment/html-app  # Ensure the deployment completes successfully
+
